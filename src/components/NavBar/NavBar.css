@@ -1,0 +1,30 @@
+html {
+    box-sizing: border-box;
+    font-size: 62.5%; /*1rem = 10px*/
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+.header {
+
+    height: 25rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.barra {
+    padding-top: 2rem;
+    text-align: center;
+}
+.barra .navegacion {
+    list-style: none;
+    text-shadow: 1px 1px 2px #000000;
+    font-weight: 500;
+}
+.barra .navegacion__enlace {
+    display: block;
+    text-align: center;
+    font-size: 1.8rem;
+    padding: .5rem;
+}
