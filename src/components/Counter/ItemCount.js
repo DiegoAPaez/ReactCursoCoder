@@ -1,13 +1,14 @@
 import { useState } from "react";
 
-const Counter = () => {
-    const [count, setCount] = useState (1)
+const ItemCount = ({stock, initial}) => {
+    const [count, setCount] = useState (initial)
     const decrement = () => {
-        if (count > 1)
+        if (count > initial)
         setCount(count - 1)
     }
 
     const increment = () => {
+        if (count < stock)
         setCount(count + 1)
     }
     return (
@@ -20,4 +21,4 @@ const Counter = () => {
         </div>
     )
 }
-export default Counter
+export default ItemCount
