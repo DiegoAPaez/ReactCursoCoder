@@ -5,7 +5,7 @@ const ItemDetail = ({ id, name, image, category, description, price, detail, sto
             <header className="my-3">
                 <h2 className="font-semibold">{name}</h2>
             </header>
-            <img src={image} alt={`Imagen: ${name}`} className=""/>
+            <img className="rounded h-40" src={`.${image}`} alt={`Imagen: ${name}`}/>
             <section>
                 <p className="my-2">Categoria: {category}</p>
                 <p className="my-2 text-justify">Descripción: {description}</p>
