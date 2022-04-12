@@ -1,25 +1,16 @@
 
-const ItemDetail = ({ id, name, img, category, description, price, stock }) => {
+const ItemDetail = ({ id, name, image, category, description, price, detail, stock }) => {
     return (
-        <article className="">
-            <header className="">
-                <h2 className="">
-                    {name}
-                </h2>
+        <article className="w-2/4 border-solid border-slate-100 bg-gray-200 p-2 mx-2 mt-3 text-center rounded">
+            <header className="my-3">
+                <h2 className="font-semibold">{name}</h2>
             </header>
-            <picture>
-                <img src={img} alt={name} className=""/>
-            </picture>
+            <img src={image} alt={`Imagen: ${name}`} className=""/>
             <section>
-                <p className="">
-                    Categoria: {category}
-                </p>
-                <p className="">
-                    Descripción: {description}
-                </p>
-                <p className="">
-                    Precio: ${price}
-                </p>
+                <p className="my-2">Categoria: {category}</p>
+                <p className="my-2 text-justify">Descripción: {description}</p>
+                <p className="my-2 italic">{detail}</p>
+                <p className="my-2">Precio: ${price}</p>
             </section>           
             <footer className=''>
             </footer>
