@@ -12,7 +12,7 @@ const ItemCount = ({stock, initial}) => {
         setCount(count + 1)
     }
     return (
-        <div className="flex flex-col items-center bg-gray-200 my-2 rounded">
+        <div className="flex flex-col items-center w-44 bg-gray-200 my-2 rounded">
             <div className="bg-white flex flex-row w-1/2 my-2 justify-between items-center rounded">
                 <button className="m-1 p-1" onClick={decrement}>-</button>
                 <p className="m-1">{count}</p>
