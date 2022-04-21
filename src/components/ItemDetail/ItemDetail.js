@@ -2,11 +2,16 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import ItemCount from "../Counter/ItemCount"
 
-const ItemDetail = ({ id, name, image, category, description, price, detail, stock }) => {
+
+const ItemDetail = ({ id, name, image, category, description, price, detail, stock, setCart, cart, count }) => {
     const [quantity, setQuantity] = useState(0)
+
     const handleAdd = (count) => {
-        setQuantity({count})
-        console.log({count})
+        setQuantity(count)
+        const objProd = {
+            id, name, price, quantity
+        }
+        setCart([...cart, objProd])
     }
 
 
@@ -24,7 +29,7 @@ const ItemDetail = ({ id, name, image, category, description, price, detail, sto
                     <p className="my-2 font-semibold">Precio: ${price}</p>
                 </section>           
                 <footer className='col-start-2 col-end-3'>
-                    {quantity.count > 0 ? <Link to='/cart' className="text-center border-solid text-white bg-green-500 h-12 p-2 my-2 rounded">Ir al carrito</Link> : <ItemCount onConfirm={handleAdd} stock={stock} initial={1} className=""/>}
+                    {quantity > 0 ? <Link to='/cart' className="text-center border-solid text-white bg-green-500 h-12 p-2 my-2 rounded">Ir al carrito</Link> : <ItemCount onConfirm={handleAdd} stock={stock} initial={1} className=""/>}
                 </footer>
             </div> 
         </article>
