@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom"
 
 const Item = ({id, name, image}) => {
+
+
     return (
         <div className="border-solid border-slate-100 bg-gray-200 w-44 px-3 py-4 mt-2 mb-2 text-center rounded">
             <img className="rounded h-40" src={image} alt={name}/>

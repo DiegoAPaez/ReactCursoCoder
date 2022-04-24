@@ -3,25 +3,31 @@ import './App.css'
 import NavBar from './components/NavBar/NavBar';
 import ItemListContainer from './components/ItemListContainer/ItemListContainer';
 import ItemDetailContainer from './components/ItemDetailContainer/ItemDetailContainer';
-import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
-import { useState } from 'react';
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import { CartContextProvider } from './context/CartContext';
 
-function App() {
-  const [cart, setCart] = useState([])
-  console.log(cart)
+// export const Context = createContext()
+
+const App = () => {
+  // const [cart, setCart] = useState([])
+  // console.log(cart)
 
   return (
     <div className="App">
       <header className="header">
-        <BrowserRouter>
-          <NavBar/>
-          <Routes>
-            <Route path='*' element={<h1>Not Found 404</h1>}/>
-            <Route path='/' element={<ItemListContainer/>}/>
-            <Route path='/category/:categoryId' element={<ItemListContainer/>}/>
-            <Route path='/detail/:productId' element={<ItemDetailContainer setCart={setCart} cart={cart}/>}/>
-          </Routes>
-        </BrowserRouter>
+        {/* <Context.Provider value={{ cart, setCart}}> */}
+        <CartContextProvider>
+          <BrowserRouter>
+            <NavBar/>
+            <Routes>
+              <Route path='*' element={<h1>Not Found 404</h1>}/>
+              <Route path='/' element={<ItemListContainer/>}/>
+              <Route path='/category/:categoryId' element={<ItemListContainer/>}/>
+              <Route path='/detail/:productId' element={<ItemDetailContainer/>}/>
+            </Routes>
+          </BrowserRouter>
+        </CartContextProvider>
+        {/* </Context.Provider> */}
 
       </header>
     </div>

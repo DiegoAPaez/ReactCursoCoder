@@ -1,17 +1,19 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { Link } from "react-router-dom"
 import ItemCount from "../Counter/ItemCount"
+import CartContext from "../../context/CartContext"
 
 
-const ItemDetail = ({ id, name, image, category, description, price, detail, stock, setCart, cart, count }) => {
-    const [quantity, setQuantity] = useState(0)
+const ItemDetail = ({ id, name, image, category, description, price, detail, stock}) => {
+    // const [quantity, setQuantity] = useState(0)
+    const { addItem, isInCart } = useContext(CartContext)
 
     const handleAdd = (count) => {
-        setQuantity(count)
-        const objProd = {
-            id, name, price, quantity
+        //setQuantity(count)
+        const productObj = {
+            id, name, price
         }
-        setCart([...cart, objProd])
+        addItem ({...productObj, quantity:count})
     }
 
 
@@ -29,7 +31,7 @@ const ItemDetail = ({ id, name, image, category, description, price, detail, sto
                     <p className="my-2 font-semibold">Precio: ${price}</p>
                 </section>           
                 <footer className='col-start-2 col-end-3'>
-                    {quantity > 0 ? <Link to='/cart' className="text-center border-solid text-white bg-green-500 h-12 p-2 my-2 rounded">Ir al carrito</Link> : <ItemCount onConfirm={handleAdd} stock={stock} initial={1} className=""/>}
+                    {isInCart(id) > 0 ? <Link to='/cart' className="text-center border-solid text-white bg-green-500 h-12 p-2 my-2 rounded">Ir al carrito</Link> : <ItemCount onAdd={handleAdd} stock={stock} initial={1} className=""/>}
                 </footer>
             </div> 
         </article>
