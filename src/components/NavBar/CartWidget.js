@@ -1,12 +1,16 @@
 import { useContext } from "react"
 import CartContext from "../../context/CartContext"
+import { Link } from "react-router-dom"
 
 const CartWidget = () => {
 
-  const { getQuantity } = useContext(CartContext)
+  const { getQuantity, cart } = useContext(CartContext)
+
+
 
   return (
-      <div className="flex flex-row">
+      <Link to='/cart'>
+      <div className={`flex flex-row ${cart == 0 ? 'hidden' : ''}`}> 
       <li className="px-1"><svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-shopping-cart" width="28" height="28" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
           <circle cx="6" cy="19" r="2" />
@@ -15,7 +19,7 @@ const CartWidget = () => {
           <path d="M6 5l14 1l-1 7h-13" />
           </svg></li>
       <li>{getQuantity()}</li>
-    </div>
+    </div></Link>
   )
 }
 export default CartWidget

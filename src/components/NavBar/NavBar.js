@@ -1,7 +1,8 @@
 import CartWidget from "./CartWidget"
 import { Link, NavLink } from "react-router-dom"
 import { getCategories } from "../../asyncmock"
-import { useState , useEffect } from "react"
+import { useState , useEffect} from "react"
+
 
 const NavBar = () => {
     const [categories , setCategories] = useState([])
