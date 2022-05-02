@@ -29,6 +29,7 @@ const ItemDetail = ({ id, name, image, category, description, price, detail, sto
                     <p className="my-2 text-justify">Descripción: {description}</p>
                     <p className="my-2 text-sm italic">Categoria: {category}</p>
                     <p className="my-2 text-sm italic">{detail}</p>
+                    <p className="my-2 text-sm italic">En stock: {stock}</p>
                     <p className="my-2 font-semibold">Precio: ${price}</p>
                 </section>           
                 <footer className='col-start-2 col-end-3'>
