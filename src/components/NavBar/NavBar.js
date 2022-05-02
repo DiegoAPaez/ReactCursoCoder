@@ -9,7 +9,7 @@ const NavBar = () => {
     const [categories , setCategories] = useState([])
 
     useEffect(() => {
-        getDocs(collection(firestoreDb, 'categories')).then(response => {
+        getDocs(collection(firestoreDb, 'products')).then(response => {
             const categories = response.docs.map(doc => {
                 return {id: doc.id, ...doc.data()}
             })
@@ -22,9 +22,9 @@ const NavBar = () => {
             <div className='flex flex-row bg-white pt-1 justify-between max-w-full bg-orange-300'>
                 <Link to='/'><h1 className='text-4xl italic font-bold p-4  m-0'>MasaMadre<span className='normal-case text-base font-light'>STORE</span></h1></Link>
                 <nav className='list-none flex items-center mr-5'>
-                    { categories.map(cat => <NavLink key={cat.id} to={`/category/${cat.id}`}
+                    { categories.map(cat => <NavLink key={cat.id} to={`/category/${cat.category}`}
                     className='p-3 text-lg font-semibold'
-                    >{cat.description}</NavLink>)}
+                    >{cat.category}</NavLink>)}
                     <CartWidget/>
                 </nav>
             </div>
