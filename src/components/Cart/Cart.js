@@ -1,9 +1,71 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import CartContext from "../../context/CartContext"
 import { Link } from "react-router-dom"
+import { firestoreDb } from "../../services/firebase"
+import { getDocs, writeBatch, query, where, collection, documentId, addDoc} from "firebase/firestore"
+import Form from "../Form/Form"
 
 const Cart = () => {
     const { cart, removeItem, totalCheckout, clearCart} = useContext(CartContext)
+
+    const [loading, setLoading] = useState(false)
+    const createOrder = () => {
+        setLoading(true)
+
+        //const formData = document.querySelectorAll(Input)
+
+        const objOrder = {
+            items: cart,
+            buyer: {
+                name: '',
+                phone: '',
+                email: ''
+            },
+            total: totalCheckout(),
+            date: new Date()
+        }
+    const ids = cart.map(prod => prod.id)
+
+    const batch = writeBatch(firestoreDb)
+
+    const collectionRef = collection(firestoreDb, 'products')
+
+    const outOfStock = []
+
+    getDocs(query(collectionRef, where(documentId(), 'in', ids)))
+        .then(response => {
+            response.docs.forEach(doc => {
+                const dataDoc = doc.data()
+                const prodQuantity = cart.find(prod => prod.id === doc.id)?.quantity
+
+                if(dataDoc.stock >= prodQuantity) {
+                    batch.update(doc.ref, { stock: dataDoc.stock - prodQuantity})
+                } else {
+                    outOfStock.push({ id: doc.id, ...dataDoc })
+                }
+            })
+        }).then(() => {
+            if(outOfStock.length === 0) {
+                const collectionRef = collection(firestoreDb, 'orders')
+                return addDoc(collectionRef, objOrder)
+            } else {
+                return Promise.reject({ name: 'outOfStockError', products: outOfStock})
+            }
+        }).then(({ id }) => {
+            batch.commit()
+            console.log(`El id de la orden es ${id}`)
+        }).catch(error => {
+            console.log(error)
+        }).finally(() => {
+            clearCart()
+            setLoading(false)
+        })
+}
+
+    if(loading) {
+        return <h1>Generando su pedido</h1>
+    }
+
 
     if(cart.length === 0) {
         return(
@@ -17,6 +79,7 @@ const Cart = () => {
     return(
         <div className="text-center w-2/4 mx-3 bg-gray-200 rounded">
             <h1 className="text-center">Carrito</h1>
+            <Form></Form>
             <table className="bg-gray-100 w-auto h-auto p-3 mx-3 mb-3 rounded">
                 <thead>
                     <tr>
@@ -41,7 +104,7 @@ const Cart = () => {
             <p className="text-center font-semibold">Total: ${totalCheckout()}</p>
             <Link to='/' className="text-center border-solid text-white bg-blue-500 p-2 mx-3 my-2 rounded">Volver a la tienda</Link>
             <button className="text-center border-solid text-white bg-red-500 p-2 mx-3 my-2 rounded" onClick={clearCart}>Vaciar Carrito</button>
-            <button className="text-center border-solid text-white bg-green-500 p-2 mx-3 my-2 rounded">Finalizar compra</button>
+            <button className="text-center border-solid text-white bg-green-500 p-2 mx-3 my-2 rounded" onClick={createOrder}>Finalizar compra</button>
         </div>
         
     )
