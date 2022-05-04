@@ -69,7 +69,7 @@ const Cart = () => {
         return(
            <div className="text=center">
                 {orderId && !errorMessage && <h1 className="mt-3">{`El número de su pedido es: ${orderId}`}</h1>}
-                {!orderId && <h1 className="mt-3">{`Su carrito se encuentra vacio ${errorMessage}`}</h1>}
+                {!orderId && errorMessage && <h1 className="mt-3">{`Su carrito se encuentra vacio ${errorMessage}`}</h1>}
                 <Link to='/' className="text-center border-solid text-white bg-blue-500 p-2 mx-3 my-3 rounded">Volver a la tienda</Link>
             </div>
         )
