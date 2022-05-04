@@ -7,20 +7,17 @@ import Form from "../Form/Form"
 
 const Cart = () => {
     const { cart, removeItem, totalCheckout, clearCart} = useContext(CartContext)
-
+    const [userInfo, setUserInfo] = useState({})
+    const [orderId, setOrderId] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
     const [loading, setLoading] = useState(false)
+    
     const createOrder = () => {
         setLoading(true)
 
-        //const formData = document.querySelectorAll(Input)
-
         const objOrder = {
             items: cart,
-            buyer: {
-                name: '',
-                phone: '',
-                email: ''
-            },
+            buyer: userInfo,
             total: totalCheckout(),
             date: new Date()
         }
@@ -52,10 +49,11 @@ const Cart = () => {
                 return Promise.reject({ name: 'outOfStockError', products: outOfStock})
             }
         }).then(({ id }) => {
-            batch.commit()
+            batch.commit();
+            setOrderId(id);
             console.log(`El id de la orden es ${id}`)
         }).catch(error => {
-            console.log(error)
+            setErrorMessage(error)
         }).finally(() => {
             clearCart()
             setLoading(false)
@@ -70,8 +68,9 @@ const Cart = () => {
     if(cart.length === 0) {
         return(
            <div className="text=center">
-                <h1>No hay productos en el carrito</h1>
-                <Link to='/' className="text-center border-solid text-white bg-blue-500 p-2 mx-3 my-2 rounded">Volver a la tienda</Link>
+                {orderId && !errorMessage && <h1 className="mt-3">{`El número de su pedido es: ${orderId}`}</h1>}
+                {!orderId && <h1 className="mt-3">{`Su carrito se encuentra vacio ${errorMessage}`}</h1>}
+                <Link to='/' className="text-center border-solid text-white bg-blue-500 p-2 mx-3 my-3 rounded">Volver a la tienda</Link>
             </div>
         )
     }
@@ -79,7 +78,7 @@ const Cart = () => {
     return(
         <div className="text-center w-2/4 mx-3 bg-gray-200 rounded">
             <h1 className="text-center">Carrito</h1>
-            <Form></Form>
+            <Form setUserInfo={setUserInfo}/>
             <table className="bg-gray-100 w-auto h-auto p-3 mx-3 mb-3 rounded">
                 <thead>
                     <tr>
