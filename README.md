@@ -10,6 +10,8 @@ Además se incluye el componente **Form** para registrar los datos del usuario q
 
 
 **_Proceso de compra:_**
+
+
 ![](https://github.com/DiegoAPaez/ReactCursoCoder/blob/1610d07a7a694bd3828ebc60b0dd65a79538deab/public/gif/e-commerce.gif)
 
 ## License
